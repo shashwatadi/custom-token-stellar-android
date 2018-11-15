@@ -1,0 +1,13 @@
+<resources>
+    <string name="navbar_create">Create</string>
+    <string name="navbar_transact">Transact</string>
+    <string name="app_name">Custom Tokenizer</string>
+    <string name="token_code">Code</string>
+    <string name="max_limit">Count</string>
+    <string name="amount">Amount</string>
+    <string name="mobile_address">To:</string>
+    <string name="button_pay">Pay</string>
+    <string name="description">Description</string>
+    <string name="button_create">Create Token</string>
+    <string name="allow_change">Fix Token Supply</string>
+</resources>
