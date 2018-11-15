@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import android.content.Intent;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    private EditText _emailText;
+    private EditText _phoneText;
     private EditText _passwordText;
     private Button _loginButton;
     private TextView _signupLink;
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     public void initialize_widgets() {
-            _emailText = (EditText) findViewById(R.id.input_email);
+            _phoneText = (EditText) findViewById(R.id.input_phone);
             _passwordText = (EditText) findViewById(R.id.input_password);
             _loginButton = (Button) findViewById(R.id.btn_login);
             _signupLink = (TextView) findViewById(R.id.link_signup);
@@ -77,12 +78,11 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
+        String phone = _phoneText.getText().toString();
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
         if(password.equals("password")){
-
             Intent intent = new Intent(this, BasicActivity.class);
             startActivity(intent);
         }
@@ -131,14 +131,14 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String email = _emailText.getText().toString();
+        String phone = _phoneText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+        if (phone.isEmpty() || !Patterns.PHONE.matcher(phone).matches()) {
+            _phoneText.setError("enter a valid phone number");
             valid = false;
         } else {
-            _emailText.setError(null);
+            _phoneText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
