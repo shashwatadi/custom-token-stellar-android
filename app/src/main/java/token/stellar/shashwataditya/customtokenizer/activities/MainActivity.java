@@ -1,5 +1,6 @@
 package token.stellar.shashwataditya.customtokenizer.activities;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -47,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         //testRun();
         setContentView(R.layout.activity_main);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+
+        /*viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
 
@@ -57,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);*/
 
 
       /*  Toolbar toolbar = findViewById(R.id.toolbar);
