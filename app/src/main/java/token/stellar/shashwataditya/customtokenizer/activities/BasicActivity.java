@@ -16,7 +16,7 @@ public class BasicActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);mm
 
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -26,6 +26,7 @@ public class BasicActivity extends AppCompatActivity {
         adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new CreateFragment(), "Create");
         adapter.addFragment(new TransactFragment(), "Transact");
+        //adapter.addFragment(new HistoryFragment(), "History");
 
 
         viewPager.setAdapter(adapter);
