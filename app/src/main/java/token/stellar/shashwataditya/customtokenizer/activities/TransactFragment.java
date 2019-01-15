@@ -40,12 +40,15 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
     Memo memo;
     KeyPair sender;
     KeyPair receiver;
+    KeyPair toAcc;
+    KeyPair fromAcc;
     EditText etAmount;
     EditText etAddress;
+    TextView tvBalance;
     Asset asset;
     @Override
     public void onClick(View v) {
-        horizon = new Horizon();
+
         amount = etAmount.getText().toString();
         //ToDo(A): validate input fields and create token
         //ToDo(B): map to public address here
@@ -54,12 +57,11 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
       //  sender = KeyPair.fromSecretSeed();
       //  receiver = KeyPair.fromAccountId();
         //horizon.getSendToken(customToken, amount, memo, sender, receiver);
-        KeyPair toAcc = KeyPair.fromSecretSeed("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
-        KeyPair fromAcc = KeyPair.fromSecretSeed("SA2TWV3SAHEQRY3BVVGWFSHSWQD5XOVGKCGHNHNNCWVOEXQHJG3G4BID");
         etAddress.setText("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
         asset = horizon.getAsset("abcd");
         horizon.getChangeTrust(false, toAcc, asset, "100");
         horizon.getSendToken(asset, amount, Memo.text("SendTest"), fromAcc, toAcc);
+        updateBalance();
         Toast.makeText(getActivity().getApplicationContext(), "Transaction Complete", Toast.LENGTH_LONG).show();
     }
 
@@ -70,8 +72,20 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
             btnTransact = (Button) rootView.findViewById(R.id.btn_transact);
             etAddress = (EditText) rootView.findViewById(R.id.et_address);
             etAmount = (EditText) rootView.findViewById(R.id.et_amount);
+            tvBalance = (TextView) rootView.findViewById(R.id.tv_balance);
+            horizon = new Horizon();
+            toAcc = KeyPair.fromSecretSeed("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
+            fromAcc = KeyPair.fromSecretSeed("SA2TWV3SAHEQRY3BVVGWFSHSWQD5XOVGKCGHNHNNCWVOEXQHJG3G4BID");
 
+            updateBalance();
             btnTransact.setOnClickListener(this);
             return rootView;
         }
+
+        void updateBalance(){
+            String strBalance = horizon.updateAccountBalance(fromAcc);
+            tvBalance.setText(strBalance);
+        }
+
+
 }

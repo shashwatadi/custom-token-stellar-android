@@ -37,14 +37,18 @@ public class Horizon{
         return false;
     }
 
-    public boolean updateAccountBalance(KeyPair pair) {
+    public String updateAccountBalance(KeyPair pair) {
 
 //        System.out.println("Seed Length: ");
         //KeyPair pair = KeyPair.fromSecretSeed();
-        new AccountBalance(pair).execute();
+        try {
+            return new AccountBalance(pair).execute().get();
+        }catch(Exception e){
+            Log.i(TAG, "Exception thrown: " + e.getMessage());
 
-
-        return false;
+        }
+        return null;
+        //return false;
     }
 
     public void getChangeTrust(boolean removeTrust, KeyPair receivingKeys, Asset customToken, String limit) {
@@ -184,6 +188,7 @@ public class Horizon{
 
         private String ofAccountSeed;
         private KeyPair pair;
+        public String strBalance;
 
         public AccountBalance(KeyPair pair) {
             this.pair = pair;
@@ -198,25 +203,26 @@ public class Horizon{
         protected String doInBackground(String... strings) {
             Network.useTestNetwork();
             Server server = getServer();
-            String strBalance;
+            strBalance = "";
             AccountResponse account = null;
             try {
                 account = server.accounts().account(pair);
                 Log.i(TAG, "Balances for account " + pair.getAccountId());
                 //ToDo: Add update Logic here
                 for (AccountResponse.Balance balance : account.getBalances()) {
-                    strBalance = String.format(
-                            "Type: %s, Code: %s, Balance: %s",
+                    strBalance += String.format(
+                            "Type: %s, Code: %s, Balance: %s\n",
                             balance.getAssetType(),
                             balance.getAssetCode(),
                             balance.getBalance());
-                    Log.i(TAG, strBalance);
+
                 }
+                Log.i(TAG, strBalance);
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getMessage();
             }
-            return null;
+            return strBalance;
         }
     }
 
@@ -395,6 +401,7 @@ public class Horizon{
             private KeyPair receivingKeys;
             private Asset customToken;
             private String limit;
+
 
             public ChangeTrust(boolean removeTrust, KeyPair receivingKeys, Asset customToken, String limit) {
                 this.removeTrust = removeTrust;
