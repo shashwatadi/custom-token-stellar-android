@@ -57,6 +57,13 @@ public class Horizon{
         new SendToken(customToken, amount, memo, senderKeys, receiverKeys).execute();
 
     }
+
+    public Asset getAsset(String assetInfo) {
+
+        KeyPair issuing = KeyPair.fromSecretSeed("SCXRXBWLVH4M3BT3D6ECTOXLNKQSWUKM25FQFEGBI7A3JZAROQAQ3OJ5");
+        return Asset.createNonNativeAsset(assetInfo, issuing);
+
+    }
 //    @Override
     /*public boolean sendCustomToken(Asset customToken, String amount, Memo memo, KeyPair senderKeys, KeyPair receiverKeys) {
 
