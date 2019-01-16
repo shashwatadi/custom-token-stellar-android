@@ -33,6 +33,7 @@ Secret Key	SCXRXBWLVH4M3BT3D6ECTOXLNKQSWUKM25FQFEGBI7A3JZAROQAQ3OJ5
 public class TransactFragment extends Fragment implements View.OnClickListener {
 
     Button btnTransact;
+    int profileNumber;
     View rootView;
     Horizon horizon;
     Asset customToken;
@@ -69,6 +70,7 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             rootView =  inflater.inflate(R.layout.transact_fragment, container, false);
+            profileNumber = ((StellarApplication) this.getActivity().getApplication()).getProfileNumber();
             btnTransact = (Button) rootView.findViewById(R.id.btn_transact);
             etAddress = (EditText) rootView.findViewById(R.id.et_address);
             etAmount = (EditText) rootView.findViewById(R.id.et_amount);

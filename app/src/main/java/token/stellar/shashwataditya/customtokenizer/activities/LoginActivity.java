@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText _passwordText;
     private Button _loginButton;
     private TextView _signupLink;
-
+    private int profileNumber;
     private TabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -82,8 +82,11 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
-        if(password.equals("password")){
+        if(password.matches("password[0-9]")){
             Intent intent = new Intent(this, BasicActivity.class);
+            //intent.putExtra("PROFILE", password.charAt(password.length()-1));
+            profileNumber = Character.getNumericValue(password.charAt(password.length()-1));
+            ((StellarApplication)this.getApplication()).setProfileNumber(profileNumber);
             startActivity(intent);
         }
 
