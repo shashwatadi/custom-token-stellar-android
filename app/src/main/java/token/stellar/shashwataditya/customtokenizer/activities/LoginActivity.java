@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import token.stellar.shashwataditya.customtokenizer.R;
+import token.stellar.shashwataditya.customtokenizer.StellarApplication;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";

@@ -2,6 +2,7 @@ package token.stellar.shashwataditya.customtokenizer.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import org.stellar.sdk.KeyPair;
 import org.stellar.sdk.Memo;
 
 import token.stellar.shashwataditya.customtokenizer.R;
+import token.stellar.shashwataditya.customtokenizer.StellarApplication;
+import token.stellar.shashwataditya.customtokenizer.helper.Constants;
+import token.stellar.shashwataditya.customtokenizer.services.BalanceAsyncTask;
 import token.stellar.shashwataditya.customtokenizer.services.Horizon;
 /*
 Send To:
@@ -85,8 +89,13 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
         }
 
         void updateBalance(){
-            String strBalance = horizon.updateAccountBalance(fromAcc);
-            tvBalance.setText(strBalance);
+
+            try {
+                String strBalance = new BalanceAsyncTask().execute(fromAcc).get();//horizon.updateAccountBalance(fromAcc);
+                tvBalance.setText(strBalance);
+            }catch (Exception e){
+                Log.i(Constants.TAG, e.getLocalizedMessage());
+            }
         }
 
 

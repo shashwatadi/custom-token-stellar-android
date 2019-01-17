@@ -1,4 +1,4 @@
-package token.stellar.shashwataditya.customtokenizer.activities;
+package token.stellar.shashwataditya.customtokenizer;
 
 import android.app.Application;
 
