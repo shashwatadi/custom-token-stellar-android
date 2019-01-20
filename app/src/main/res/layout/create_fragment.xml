@@ -16,7 +16,7 @@ android:paddingRight="24dp">
     android:layout_marginBottom="24dp"
     android:layout_gravity="center_horizontal" /-->
 
-<!--  Email Label -->
+<!--  Code Label -->
 <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,7 +29,7 @@ android:paddingRight="24dp">
         android:hint="@string/token_code" />
 </android.support.design.widget.TextInputLayout>
 
-<!--  Password Label -->
+<!--  Count Label -->
 <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

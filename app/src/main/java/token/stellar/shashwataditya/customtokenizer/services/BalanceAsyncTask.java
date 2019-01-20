@@ -8,10 +8,17 @@ import org.stellar.sdk.Network;
 import org.stellar.sdk.Server;
 import org.stellar.sdk.responses.AccountResponse;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import token.stellar.shashwataditya.customtokenizer.StellarApplication;
+import token.stellar.shashwataditya.customtokenizer.activities.BasicActivity;
 import token.stellar.shashwataditya.customtokenizer.helper.Constants;
 
 public class BalanceAsyncTask extends AsyncTask<KeyPair, Void, String> {
 
+    List<String> linkedAssets;
     KeyPair accountPair;
     @Override
     protected String doInBackground(KeyPair... keyPairs) {
@@ -31,14 +38,18 @@ public class BalanceAsyncTask extends AsyncTask<KeyPair, Void, String> {
                     }
                     else {
                         strBalance += balance.getBalance() + " " + balance.getAssetCode().toUpperCase() +"\n";
-                    }
 
+                    }
+                    linkedAssets.add(balance.getAssetCode());
                 }
                 Log.i(Constants.TAG, strBalance);
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getMessage();
             }
+
+            Set<String> set = new HashSet<>();
+
             return strBalance;
     }
 

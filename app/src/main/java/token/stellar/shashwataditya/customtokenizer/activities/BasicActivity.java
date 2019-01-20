@@ -10,28 +10,23 @@ import token.stellar.shashwataditya.customtokenizer.R;
 
 public class BasicActivity extends AppCompatActivity {
 
+
+
     private TabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    char profileValue;
+    private static BasicActivity instance;
+
+    public static BasicActivity getConfig(){
+        return instance;
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        instance = this;
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-//        if (savedInstanceState == null) {
-//            Bundle extras = getIntent().getExtras();
-//            if(extras == null) {
-//                profileValue = '\0';
-//            } else {
-//                profileValue= extras.getChar("PROFILE");
-//            }
-//        } else {
-//            profileValue= (char) savedInstanceState.getSerializable("PROFILE");
-//        }
 
         adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new CreateFragment(), "Create");
@@ -40,6 +35,26 @@ public class BasicActivity extends AppCompatActivity {
 
 
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+                if(i == 1) {
+                    TransactFragment transactFragment = (TransactFragment) adapter.getItem(i);
+                    transactFragment.updateBalance();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
     }
 }

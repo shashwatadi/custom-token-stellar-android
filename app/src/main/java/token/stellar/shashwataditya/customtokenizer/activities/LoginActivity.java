@@ -90,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
             ((StellarApplication)this.getApplication()).setProfileNumber(profileNumber);
             startActivity(intent);
         }
+        else{
+            onLoginFailed();
+        }
 
         new android.os.Handler().postDelayed(
                 new Runnable() {

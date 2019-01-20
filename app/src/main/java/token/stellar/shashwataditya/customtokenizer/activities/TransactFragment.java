@@ -1,5 +1,6 @@
 package token.stellar.shashwataditya.customtokenizer.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import org.stellar.sdk.Asset;
 import org.stellar.sdk.KeyPair;
 import org.stellar.sdk.Memo;
+
+import java.util.List;
 
 import token.stellar.shashwataditya.customtokenizer.R;
 import token.stellar.shashwataditya.customtokenizer.StellarApplication;
@@ -51,10 +54,23 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
     EditText etAddress;
     TextView tvBalance;
     Asset asset;
+    String address;
+    int tempInteger;
+    List<String> linkedAssets;
     @Override
     public void onClick(View v) {
 
         amount = etAmount.getText().toString();
+        address = etAddress.getText().toString();
+        if(address.matches("[0-9]")) {
+            tempInteger = Integer.parseInt(address);
+        }
+        else{
+            Toast.makeText(getContext(), "Picking default value as 1", Toast.LENGTH_SHORT);
+            tempInteger = 1;
+            etAddress.setText("1");
+
+        }
         //ToDo(A): validate input fields and create token
         //ToDo(B): map to public address here
         //ToDo(C): Create KeyPairs and call getSendToken
@@ -62,9 +78,15 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
       //  sender = KeyPair.fromSecretSeed();
       //  receiver = KeyPair.fromAccountId();
         //horizon.getSendToken(customToken, amount, memo, sender, receiver);
-        etAddress.setText("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
-        asset = horizon.getAsset("abcd");
-        horizon.getChangeTrust(false, toAcc, asset, "100");
+       // etAddress.setText("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
+
+        toAcc = KeyPair.fromSecretSeed(Constants.StellarPrivateKeys[tempInteger]);
+        KeyPair issuing = KeyPair.fromSecretSeed(Constants.StellarIssuingAccountKeys[0]);
+        //Todo: remove hardcode
+        asset = horizon.getAsset("SHA", issuing);
+
+
+        horizon.getChangeTrust(false, toAcc, asset, "10000");
         horizon.getSendToken(asset, amount, Memo.text("SendTest"), fromAcc, toAcc);
         updateBalance();
         Toast.makeText(getActivity().getApplicationContext(), "Transaction Complete", Toast.LENGTH_LONG).show();
@@ -79,9 +101,12 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
             etAddress = (EditText) rootView.findViewById(R.id.et_address);
             etAmount = (EditText) rootView.findViewById(R.id.et_amount);
             tvBalance = (TextView) rootView.findViewById(R.id.tv_balance);
+
+
+
             horizon = new Horizon();
-            toAcc = KeyPair.fromSecretSeed("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
-            fromAcc = KeyPair.fromSecretSeed("SA2TWV3SAHEQRY3BVVGWFSHSWQD5XOVGKCGHNHNNCWVOEXQHJG3G4BID");
+           // toAcc = KeyPair.fromSecretSeed("SB2PONE5GEDJJV6FNWMU53PTPLALXKBY5O77QDTBV2CTLGWVR7NL7O32");
+            fromAcc = KeyPair.fromSecretSeed(Constants.StellarPrivateKeys[profileNumber]);
 
             updateBalance();
             btnTransact.setOnClickListener(this);
@@ -93,6 +118,7 @@ public class TransactFragment extends Fragment implements View.OnClickListener {
             try {
                 String strBalance = new BalanceAsyncTask().execute(fromAcc).get();//horizon.updateAccountBalance(fromAcc);
                 tvBalance.setText(strBalance);
+                linkedAssets.add();
             }catch (Exception e){
                 Log.i(Constants.TAG, e.getLocalizedMessage());
             }

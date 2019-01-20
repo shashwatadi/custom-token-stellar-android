@@ -8,6 +8,7 @@ public class Constants {
 
     private static final String PROD_SERVER_STRING = "https://horizon.stellar.org";
     private static final String TEST_SERVER_STRING = "https://horizon-testnet.stellar.org";
+    public static final String MAX_ASSET_STRING_VALUE = "922337203685.4775807";
 
     public static Server getServer() {
         return new Server(TEST_SERVER_STRING);
@@ -38,6 +39,7 @@ public class Constants {
     };
 
     public static final String[] StellarIssuingAccountKeys = {
+            "SCXRXBWLVH4M3BT3D6ECTOXLNKQSWUKM25FQFEGBI7A3JZAROQAQ3OJ5",
             "SBIS6J5PDRR7I23BEAKFN3UWC2AIM4WPP3EDJKFLQ46C3X2MM5TQX4UQ",
             "SDONWAXYJCHTMEPUIEEG3WPRUGSP4OEVGSR7OUQ2BTBJO2TY36EN2A65",
             "SBA46U2WKV3VAYNWQETAIKWDR5ILPF2FKITJY5D46NSYW2JSBBWSLK6G",

@@ -51,20 +51,22 @@ public class Horizon{
         //return false;
     }
 
-    public void getChangeTrust(boolean removeTrust, KeyPair receivingKeys, Asset customToken, String limit) {
+    public boolean getChangeTrust(boolean removeTrust, KeyPair receivingKeys, Asset customToken, String limit) {
 
             new ChangeTrust(removeTrust, receivingKeys, customToken, limit).execute();
+            return true;
     }
 
-    public void getSendToken(Asset customToken, String amount, Memo memo, KeyPair senderKeys, KeyPair receiverKeys) {
+    public boolean getSendToken(Asset customToken, String amount, Memo memo, KeyPair senderKeys, KeyPair receiverKeys) {
 
         new SendToken(customToken, amount, memo, senderKeys, receiverKeys).execute();
+        return true;
 
     }
 
-    public Asset getAsset(String assetInfo) {
+    public Asset getAsset(String assetInfo, KeyPair issuing) {
 
-        KeyPair issuing = KeyPair.fromSecretSeed("SCXRXBWLVH4M3BT3D6ECTOXLNKQSWUKM25FQFEGBI7A3JZAROQAQ3OJ5");
+        //KeyPair issuing = KeyPair.fromSecretSeed("SCXRXBWLVH4M3BT3D6ECTOXLNKQSWUKM25FQFEGBI7A3JZAROQAQ3OJ5");
         return Asset.createNonNativeAsset(assetInfo, issuing);
 
     }
